@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: scaletestapp-app-sm
+  namespace: default
+  labels:
+    release: prometheus-operator  # Должно совпадать с Prometheus
+spec:
+  endpoints:
+  - interval: 10s
+    targetPort: 8080
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      prometheus-monitored: "true"
